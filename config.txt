@@ -1,0 +1,8 @@
+# Path to the Git repository
+repo_path=/path/to/your/repo
+
+# Path to the lock file (optional)
+lock_file=git_push.lock
+
+# Path to the log file (optional)
+log_file=git_push.log
