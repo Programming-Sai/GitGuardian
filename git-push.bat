@@ -18,7 +18,7 @@ if not defined LOG_FILE (
     set LOG_FILE=git_push.log
 )
 
->> %LOG_FILE% echo ==== Script started at %date% %time% ====
+>> "%LOG_FILE%" echo ==== Script started at %date% %time% ====
 
 :: Change to GIT_FOLDER if defined and exists
 if defined GIT_FOLDER (
@@ -26,6 +26,9 @@ if defined GIT_FOLDER (
         cd /d "%GIT_FOLDER%"
     )
 )
+
+:: After push or commit
+git status >> "%LOG_FILE%"
 
 :: Add and commit
 git add .
@@ -48,5 +51,5 @@ if /i "%~2"=="push" (
     echo Changes have been committed successfully. Not pushed.
 )
 
->> %LOG_FILE% echo ==== Script ended at %date% %time% ====
+>> "%LOG_FILE%" echo ==== Script ended at %date% %time% ====
 endlocal

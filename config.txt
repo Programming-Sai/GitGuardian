@@ -1,4 +1,5 @@
-GIT_SCRIPT=git-push.bat
-LOCK_FILE=git_push.lock
-LOG_FILE=git_push.log
-SCHEDULE_TIME=12am
+GIT_SCRIPT=c:\Users\pc\Desktop\GitGuardian\git-push.bat
+LOCK_FILE=c:\Users\pc\Desktop\GitGuardian\git_push.lock
+LOG_FILE=c:\Users\pc\Desktop\GitGuardian\git_push.log
+SCHEDULE_TIME=5:55 PM
+GIT_FOLDER=c:\Users\pc\Desktop\GitGuardian-TestRepo
