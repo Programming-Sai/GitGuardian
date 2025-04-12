@@ -1,44 +1,52 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 
-:: Load config from the configuration file
-for /f "delims=" %%i in (%1) do set "config=%%i"
-
-:: Load repo path and branch from the config (assuming config.txt has lines like `repo_path=path` and `branch=main`)
-for /f "tokens=1,2 delims==" %%a in ('findstr "repo_path=" %config%') do set "REPO_PATH=%%b"
-for /f "tokens=1,2 delims==" %%a in ('findstr "branch=" %config%') do set "BRANCH=%%b"
-
-:: If repo path and branch are not defined, exit
-if not defined REPO_PATH (
-    echo Repo path not defined in config. Exiting...
-    exit /b
+:: Check for commit message
+if "%~1"=="" (
+    echo No commit message provided.
+    exit /b 1
 )
 
-if not defined BRANCH (
-    echo Branch not defined in config. Exiting...
-    exit /b
+:: Check if in a Git repository
+if not exist ".git" (
+    echo This is not a Git repository. Please navigate to one before running the script.
+    exit /b 1
 )
 
-:: Change directory to the repo
-cd /d %REPO_PATH%
-
-:: Handle commit and push
-set COMMIT_MSG=%2
-if not defined COMMIT_MSG (
-    echo No commit message provided. Using default commit message. >> git_push.log
-    set COMMIT_MSG="Automated commit"
+:: Create log file if not already set
+if not defined LOG_FILE (
+    set LOG_FILE=git_push.log
 )
 
-:: Run Git commands
+>> %LOG_FILE% echo ==== Script started at %date% %time% ====
+
+:: Change to GIT_FOLDER if defined and exists
+if defined GIT_FOLDER (
+    if exist "%GIT_FOLDER%" (
+        cd /d "%GIT_FOLDER%"
+    )
+)
+
+:: Add and commit
 git add .
-git commit -m %COMMIT_MSG%
-git push origin %BRANCH%
+git commit -m "%~1"
 
-:: Check if push was successful
-if %ERRORLEVEL%==0 (
-    echo Git push successful. >> git_push.log
-) else (
-    echo Git push failed. >> git_push.log
+if errorlevel 1 (
+    echo Commit failed. Possibly nothing to commit.
+    exit /b 1
 )
 
+:: Check if "push" argument was passed
+if /i "%~2"=="push" (
+    git push
+    if errorlevel 1 (
+        echo Push failed. Please check your internet connection or remote config.
+        exit /b 1
+    )
+    echo Changes have been committed and pushed successfully.
+) else (
+    echo Changes have been committed successfully. Not pushed.
+)
+
+>> %LOG_FILE% echo ==== Script ended at %date% %time% ====
 endlocal

@@ -1,8 +1,4 @@
-# Path to the Git repository
-repo_path=/path/to/your/repo
-
-# Path to the lock file (optional)
-lock_file=git_push.lock
-
-# Path to the log file (optional)
-log_file=git_push.log
+GIT_SCRIPT=git-push.bat
+LOCK_FILE=git_push.lock
+LOG_FILE=git_push.log
+SCHEDULE_TIME=12am
