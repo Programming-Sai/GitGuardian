@@ -1,7 +1,7 @@
-GIT_SCRIPT=c:\Users\pc\Desktop\GitGuardian\git-push.bat
-LOCK_FILE=c:\Users\pc\Desktop\GitGuardian\git_push.lock
-LOG_FILE=c:\Users\pc\Desktop\GitGuardian\git_push.log
-GIT_FOLDER=c:\Users\pc\Desktop\daily-solves
+GIT_SCRIPT=         # Full path to the `git-push.bat` file
+LOCK_FILE=c:        # Full path to the `git_push.lock` file that you would be creating
+LOG_FILE=c:         # Full path to the `git_push.log` file that you would be creating           
+GIT_FOLDER=         # Full path to the `daily-solves` folder that you would be creating  
 
 
 
