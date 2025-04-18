@@ -1,7 +1,8 @@
 # Load config from config.txt
 # Load config.txt into a hashtable
 $config = @{}
-Get-Content ".\config.txt" | ForEach-Object {
+$configFilePath = Join-Path (Get-Location) 'config.txt'
+Get-Content $configFilePath | ForEach-Object {
     if ($_ -match "^\s*([^#][^=]+?)\s*=\s*(.+)$") {
         $key = $matches[1].Trim()
         $value = $matches[2].Trim()
@@ -42,13 +43,16 @@ if (Test-Path $lockFile) {
 # Create new lock file
 Set-Content $lockFile "Lock file created at $(Get-Date)"
 
-# Run git
-# Run the git script with arguments
-$commitMessage = "Auto commit from PowerShell"
-$pushFlag = "push"  # Or "" if you don't want to push
+# Run git-push.bat with commit message and optional "push"
+$commitMessage = "Auto commit at $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+$pushFlag = "push"
 
-Add-Content $logFile "Running Git script at $(Get-Date) with commit message: '$commitMessage' and push flag: '$pushFlag'"
+# Set required env variables before calling the script
+$env:GIT_FOLDER = $gitFolder
+$env:LOG_FILE = $logFile
 
-Start-Process -FilePath $gitScript -ArgumentList "`"$commitMessage`"", $pushFlag -Wait -NoNewWindow
+Set-Location $gitFolder
+& $gitScript $commitMessage $pushFlag
 
-Add-Content $logFile "Git script finished at $(Get-Date)"
+# Clean up lock
+Remove-Item $lockFile
