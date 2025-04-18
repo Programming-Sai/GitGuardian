@@ -85,9 +85,3 @@ Check the log file for confirmation of commits and any errors.
 - **Scheduling**: adjust time fields in your crontab entries via `crontab -e`.
 - **Configuration**: modify `config.txt` entries (script names, filenames, repo path).
 - **Branching/Tags**: update `git-push.bat` to handle additional Git options if needed.
-
----
-
-## License
-
-MIT © Your Name or Organization
