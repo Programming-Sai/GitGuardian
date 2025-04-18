@@ -1,6 +1,6 @@
 GIT_SCRIPT=         # Full path to the `git-push.bat` file
-LOCK_FILE=c:        # Full path to the `git_push.lock` file that you would be creating
-LOG_FILE=c:         # Full path to the `git_push.log` file that you would be creating           
+LOCK_FILE=          # Full path to the `git_push.lock` file that you would be creating
+LOG_FILE=           # Full path to the `git_push.log` file that you would be creating           
 GIT_FOLDER=         # Full path to the `daily-solves` folder that you would be creating  
 
 
